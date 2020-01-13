@@ -51,12 +51,12 @@
 (defn play-game [board current-player next-player]
   (do
     (print-message (str (current-player :name) TURN NEWLINE PLAYER-MOVE-MESSAGE))
-    (let [current-move (dec (read-int-value))]
-      (let [updated-board (update-board board current-move (current-player :symbol))]
-        (draw-board updated-board)
-        (if (has-won updated-board current-player)
-          (print-message (get-winning-message (current-player :name)))
-          (recur updated-board next-player current-player))))))
+    (let [current-move (dec (read-int-value))
+          updated-board (update-board board current-move (current-player :symbol))]
+      (draw-board updated-board)
+      (if (has-won updated-board current-player)
+        (print-message (get-winning-message (current-player :name)))
+        (recur updated-board next-player current-player)))))
 
 (defn start []
   (let [player-details (get-players-details) board (into [] (repeat TOTAL-MOVE-COUNT SPACE))]
