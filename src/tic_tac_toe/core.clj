@@ -1,5 +1,7 @@
 (ns tic-tac-toe.core
   (:use
+    [clojure.string
+     :only [join]]
     [tic-tac-toe.util
      :only [read-value
             read-int-value
@@ -34,8 +36,8 @@
 
 (defn draw-board [board] (->> board
                               (partition 3)
-                              (map #(clojure.string/join (str SPACE COLUMN-SEPARATOR SPACE) %))
-                              (clojure.string/join (str NEWLINE ROW-SEPARATOR NEWLINE))
+                              (map #(join (str SPACE COLUMN-SEPARATOR SPACE) %))
+                              (join (str NEWLINE ROW-SEPARATOR NEWLINE))
                               println))
 
 (defn update-board [board index move] (if (= SPACE (get board index)) (assoc board index move) board))
