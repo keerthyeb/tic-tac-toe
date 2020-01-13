@@ -6,7 +6,6 @@
             print-message
             winning-moves
             add-suffix
-            is-starting-with
             is-subset]]
 
     [tic-tac-toe.constant
@@ -39,15 +38,9 @@
 
 (defn update-board [board index move] (if (= SPACE (get board index)) (assoc board index move) board))
 
-(defn map-board-with-index [board] (map vector board (range TOTAL-MOVE-COUNT)))
-
 (defn get-winning-message [winner-name] (str GREET-MESSAGE SPACE winner-name SPACE WINNING-MESSAGE))
 
-(defn get-player-moves [board symbol]
-  (vec
-    (map #(second %)
-         (filter (partial is-starting-with symbol)
-                 (map-board-with-index board)))))
+(defn get-player-moves [board symbol] (keep-indexed #(when (= %2 symbol) %1) board))
 
 (defn has-won [board current-player]
   (let [player-moves (get-player-moves board (current-player :symbol))]
@@ -64,8 +57,7 @@
           (recur updated-board next-player current-player))))))
 
 (defn start []
-  (let [player-details (get-players-details)]
-    (let [board (apply vector (repeat TOTAL-MOVE-COUNT SPACE))]
-      (play-game board (player-details :player1) (player-details :player2)))))
+  (let [player-details (get-players-details) board (into [] (repeat TOTAL-MOVE-COUNT SPACE))]
+    (play-game board (player-details :player1) (player-details :player2))))
 
 (start)

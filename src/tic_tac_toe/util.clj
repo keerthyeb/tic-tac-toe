@@ -21,6 +21,4 @@
     (= (mod x 3) 2) (str SPACE NEWLINE ROW-SEPARATOR NEWLINE)
     :else COLUMN-SEPARATOR))
 
-(defn is-starting-with [value collection] (= (first collection) value))
-
 (defn is-subset [set1 set2] (every? #(contains? (set set1) %) set2))
