@@ -5,7 +5,6 @@
             read-int-value
             print-message
             winning-moves
-            add-suffix
             is-subset]]
 
     [tic-tac-toe.constant
@@ -20,6 +19,8 @@
             TOTAL-MOVE-COUNT
             TURN
             NEWLINE
+            ROW-SEPARATOR
+            COLUMN-SEPARATOR
             ]]
     ))
 
@@ -31,10 +32,11 @@
       {:player1 {:name player1, :symbol PLAYER-1-SYMBOL}
        :player2 {:name player2, :symbol PLAYER-2-SYMBOL}})))
 
-(defn draw-board [board]
-  (print-message
-    (apply str
-           (map #(str SPACE (board %) SPACE (add-suffix %)) (range TOTAL-MOVE-COUNT)))))
+(defn draw-board [board] (->> board
+                              (partition 3)
+                              (map #(clojure.string/join (str SPACE COLUMN-SEPARATOR SPACE) %))
+                              (clojure.string/join (str NEWLINE ROW-SEPARATOR NEWLINE))
+                              println))
 
 (defn update-board [board index move] (if (= SPACE (get board index)) (assoc board index move) board))
 
