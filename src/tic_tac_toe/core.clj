@@ -44,10 +44,10 @@
 (defn get-winning-message [winner-name] (str GREET-MESSAGE SPACE winner-name SPACE WINNING-MESSAGE))
 
 (defn get-player-moves [board symbol]
-  (apply vector
-         (map #(second %)
-              (filter (partial is-starting-with symbol)
-                      (map-board-with-index board)))))
+  (vec
+    (map #(second %)
+         (filter (partial is-starting-with symbol)
+                 (map-board-with-index board)))))
 
 (defn has-won [board current-player]
   (let [player-moves (get-player-moves board (current-player :symbol))]
@@ -55,7 +55,7 @@
 
 (defn play-game [board current-player next-player]
   (do
-    (print-message (str (current-player :name) TURN NEWLINE PLAYER-MOVE-MESSAGE ))
+    (print-message (str (current-player :name) TURN NEWLINE PLAYER-MOVE-MESSAGE))
     (let [current-move (dec (read-int-value))]
       (let [updated-board (update-board board current-move (current-player :symbol))]
         (draw-board updated-board)
